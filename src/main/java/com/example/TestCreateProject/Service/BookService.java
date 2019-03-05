@@ -66,4 +66,8 @@ public class BookService {
 	public List<Book> getBookByOrderViewType(int type, int start, int end) {
 		return bookRepo.getBookByOrderViewType(type, start, end);
 	}
+	
+	public List<Book> getBookByID(int id) {
+		return bookRepo.getBookByID(id);
+	}
 }

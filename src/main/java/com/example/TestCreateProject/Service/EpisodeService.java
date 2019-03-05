@@ -30,4 +30,12 @@ public class EpisodeService {
 	public int updateEpisode(Episode episode) {
 		return episodeRepo.updateEpisode(episode);
 	}
+	
+	public List<Episode> getEpisodeByIDOrder(int id_book, int start) {
+		return episodeRepo.getEpisodeByIDOrder(id_book, start);
+	}
+	
+	public int updateEpisodeView(int view, int id_episode) {
+		return episodeRepo.updateEpisodeView(view, id_episode);
+	}
 }

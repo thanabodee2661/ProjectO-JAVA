@@ -18,6 +18,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.example.TestCreateProject.Model.Book;
+import com.example.TestCreateProject.Model.Episode;
 import com.example.TestCreateProject.Model.TypeBook;
 
 @Repository
@@ -104,7 +105,7 @@ public class BookRepo {
 
 			List<Map<String, Object>> type_books = jdbcTemplate.queryForList(sql, new Object[] { id_book });
 			book.setTypebook(type_books);
-			sql = "SELECT e.id_episode, e.name_episode, e.view, e.Content FROM episode e\r\n"
+			sql = "SELECT e.id_episode, e.name_episode, e.view, e.content FROM episode e\r\n"
 					+ "WHERE e.id_book = ? ORDER BY e.id_episode DESC limit 0, 3";
 			List<Map<String, Object>> episode = jdbcTemplate.queryForList(sql, new Object[] { id_book });
 			book.setEpisode(episode);
@@ -137,7 +138,7 @@ public class BookRepo {
 
 			List<Map<String, Object>> type_books = jdbcTemplate.queryForList(sql, new Object[] { id_book });
 			book.setTypebook(type_books);
-			sql = "SELECT e.id_episode, e.name_episode, e.view, e.Content FROM episode e\r\n"
+			sql = "SELECT e.id_episode, e.name_episode, e.view, e.content FROM episode e\r\n"
 					+ "WHERE e.id_book = ? ORDER BY e.id_episode DESC limit 0, 3";
 			List<Map<String, Object>> episode = jdbcTemplate.queryForList(sql, new Object[] { id_book });
 			book.setEpisode(episode);
@@ -173,7 +174,7 @@ public class BookRepo {
 			List<Map<String, Object>> type_books = jdbcTemplate.queryForList(sql, new Object[] { id_book });
 			book.setTypebook(type_books);
 
-			sql = "SELECT e.id_episode, e.name_episode, e.view, e.Content FROM episode e\r\n"
+			sql = "SELECT e.id_episode, e.name_episode, e.view, e.content FROM episode e\r\n"
 					+ "WHERE e.id_book = ? ORDER BY e.id_episode DESC limit 0, 3";
 			List<Map<String, Object>> episode = jdbcTemplate.queryForList(sql, new Object[] { id_book });
 			book.setEpisode(episode);
@@ -209,8 +210,43 @@ public class BookRepo {
 
 			List<Map<String, Object>> type_books = jdbcTemplate.queryForList(sql, new Object[] { id_book });
 			book.setTypebook(type_books);
-			sql = "SELECT e.id_episode, e.name_episode, e.view, e.Content FROM episode e\r\n"
+			sql = "SELECT e.id_episode, e.name_episode, e.view, e.content FROM episode e\r\n"
 					+ "WHERE e.id_book = ? ORDER BY e.id_episode DESC limit 0, 3";
+			List<Map<String, Object>> episode = jdbcTemplate.queryForList(sql, new Object[] { id_book });
+			book.setEpisode(episode);
+			books.add(book);
+		}
+		return books;
+	}
+	
+	public List<Book> getBookByID(int id) {
+
+		String sql = "SELECT SUM(e.view) AS view, b.id_book, b.name_fiction, b.create_day, b.preview, b.id_user, b.img_book, u.panname, COUNT(e.id_episode) AS count_episode FROM book b\r\n" + 
+				"INNER JOIN episode e ON e.id_book = b.id_book\r\n" + 
+				"INNER JOIN user u ON u.id_user = b.id_user\r\n" + 
+				"WHERE b.id_book = ?";
+		List<Book> books = new ArrayList<Book>();
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, id);
+
+		for (Map<String, Object> row : rows) {
+			int id_book = (int) row.get("id_book");
+			Book book = new Book();
+			book.setId_book((int) row.get("id_book"));
+			book.setName_fiction((String) row.get("name_fiction"));
+			book.setCreate_day((Date) row.get("create_day"));
+			book.setId_user((int) row.get("id_user"));
+			book.setPreview((String) row.get("preview"));
+			book.setImg_book((String) row.get("img_book"));
+			book.setView(((BigDecimal) row.get("view")).intValue());
+			book.setPanname((String) row.get("panname"));
+			book.setCount_episode(((Long) row.get("count_episode")).intValue());
+			sql = "SELECT tb.id_type, t.name_type FROM type_book tb " + "INNER JOIN type t ON t.id_type = tb.id_type "
+					+ "WHERE tb.id_book = ?";
+
+			List<Map<String, Object>> type_books = jdbcTemplate.queryForList(sql, new Object[] { id_book });
+			book.setTypebook(type_books);
+			sql = "SELECT e.id_episode, e.name_episode, e.view, e.content FROM episode e\r\n"
+					+ "WHERE e.id_book = ? ORDER BY e.id_episode DESC limit 0, 5";
 			List<Map<String, Object>> episode = jdbcTemplate.queryForList(sql, new Object[] { id_book });
 			book.setEpisode(episode);
 			books.add(book);

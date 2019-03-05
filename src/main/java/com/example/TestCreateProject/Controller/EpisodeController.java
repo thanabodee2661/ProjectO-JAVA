@@ -22,12 +22,13 @@ public class EpisodeController {
 	private EpisodeService episodeService;
 	
 	@GetMapping("/episodes/{id}")
-	public List<Episode>  getEpisodeByID(@PathVariable("id") int id_book) {
+	public List<Episode> getEpisodeByID(@PathVariable("id") int id_book) {
 		return episodeService.getEpisodeByID(id_book);
 	}
 	
 	@GetMapping("/episode/{id}")
 	public Episode getEpisodeByIDEpisode(@PathVariable("id") int id_episode) {
+		System.out.println("31");
 		return episodeService.getEpisodeByIDEpisode(id_episode);
 	}
 	
@@ -38,6 +39,18 @@ public class EpisodeController {
 	
 	@PutMapping("/episode")
 	public int updateEpisode(@RequestBody Episode episode ) {
+		System.out.println("42");
 		return episodeService.updateEpisode(episode);
+	}
+	
+	@GetMapping("/episodes/order/{id}/{start}")
+	public List<Episode> getEpisodeByIDOrder(@PathVariable("id") int id_book, @PathVariable("start") int start) {
+		return episodeService.getEpisodeByIDOrder(id_book, start);
+	}
+	
+	@GetMapping("/episodeview/{view}/{id_episode}")
+	public int updateEpisodeView(@PathVariable("id_episode") int id_episode, @PathVariable("view") int view) {
+		System.out.println("53");
+		return episodeService.updateEpisodeView(view, id_episode);
 	}
 }

@@ -16,6 +16,7 @@ public class Book {
 	private int view;
 	private List<Map<String, Object>> episode;
 	private String panname;
+	private int count_episode;
 	public int getId_book() {
 		return id_book;
 	}
@@ -75,6 +76,12 @@ public class Book {
 	}
 	public void setPanname(String panname) {
 		this.panname = panname;
+	}
+	public int getCount_episode() {
+		return count_episode;
+	}
+	public void setCount_episode(int count_episode) {
+		this.count_episode = count_episode;
 	}
 
 

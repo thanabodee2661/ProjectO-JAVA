@@ -112,4 +112,9 @@ public class BookController {
 			@PathVariable("end") int end) {
 		return bookService.getBookByOrderViewType(type, start, end);
 	}
+	
+	@GetMapping("/book/id/{id}")
+	public List<Book> getBookByID(@PathVariable("id") int id) {
+		return bookService.getBookByID(id);
+	}
 }
