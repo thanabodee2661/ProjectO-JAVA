@@ -9,7 +9,27 @@ public class UserComment {
    private String name;
    private String penname;
    private String avatar;
-  
+   private int idBook;
+   private int idEpisode;
+   private int idComment;
+public int getIdBook() {
+	return idBook;
+}
+public void setIdBook(int idBook) {
+	this.idBook = idBook;
+}
+public int getIdEpisode() {
+	return idEpisode;
+}
+public void setIdEpisode(int idEpisode) {
+	this.idEpisode = idEpisode;
+}
+public int getIdComment() {
+	return idComment;
+}
+public void setIdComment(int idComment) {
+	this.idComment = idComment;
+}
 public int getIdUser() {
 	return idUser;
 }

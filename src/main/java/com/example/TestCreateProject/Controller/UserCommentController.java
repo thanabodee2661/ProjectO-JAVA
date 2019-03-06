@@ -17,6 +17,7 @@ import com.example.TestCreateProject.Model.Commentday;
 import com.example.TestCreateProject.Model.Commentmonth;
 import com.example.TestCreateProject.Model.Commentyear;
 import com.example.TestCreateProject.Model.UserComment;
+import com.example.TestCreateProject.Model.webboard;
 import com.example.TestCreateProject.Service.CommentService;
 import com.example.TestCreateProject.Service.UserCommentService;
 
@@ -56,5 +57,35 @@ public class UserCommentController {
     @RequestMapping(value = "/user/banuser", method = RequestMethod.PUT)
     public int Banuser(@RequestBody UserComment usercomment) {
       	return  usercommentservice.Banuser(usercomment);
+    }
+    
+    @RequestMapping(value = "/user/insertcomment", method = RequestMethod.POST ,produces = "application/json")
+    public int InsertComment(@RequestBody UserComment ment) {
+    	return  usercommentservice.InsertComment(ment);
+	}
+	
+    @RequestMapping(value = "/user/insertusercomment", method = RequestMethod.POST ,produces = "application/json")
+    public int InsertUserComment(@RequestBody UserComment ment) {
+    	return  usercommentservice.InsertUserComment(ment);
+	}
+    
+    @RequestMapping(value = "/user/listcomment", method = RequestMethod.PUT)
+    public List<UserComment> ListComment(@RequestBody UserComment ment){
+    	return  usercommentservice.ListComment(ment);
+    }
+    
+    @RequestMapping(value = "/user/modifyusercomment", method = RequestMethod.PUT)
+    public int ModifyUserComment(@RequestBody UserComment ment) {
+      	return  usercommentservice.ModifyUserComment(ment);
+    }
+    
+    @RequestMapping(value = "/user/deleteusercomment", method = RequestMethod.PUT)
+    public int DeleteUserComment(@RequestBody UserComment ment) {
+      	return  usercommentservice.DeleteUserComment(ment);
+    }
+    
+    @RequestMapping(value = "/user/reportusercomment", method = RequestMethod.PUT)
+    public int ReportUserComment(@RequestBody UserComment ment) {
+      	return  usercommentservice.ReportUserComment(ment);
     }
 }

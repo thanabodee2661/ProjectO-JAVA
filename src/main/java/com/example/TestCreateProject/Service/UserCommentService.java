@@ -25,4 +25,28 @@ public class UserCommentService {
 	 public int Banuser(UserComment usercomment) {
 		 return usercommentrepo.Banuser(usercomment);
 	 }
+	 
+	 public int InsertComment(UserComment ment) {
+		 return usercommentrepo.InsertComment(ment);
+	 }
+	 
+	 public int InsertUserComment(UserComment ment) {
+		 return usercommentrepo.InsertUserComment(ment);
+	 }
+	 
+	 public List<UserComment> ListComment(UserComment ment){
+		 return usercommentrepo.ListComment(ment);
+	 }
+	 
+	 public int ModifyUserComment(UserComment ment) {
+		 return usercommentrepo.ModifyUserComment(ment);
+	 }
+	 
+	 public int DeleteUserComment(UserComment ment) {
+		 return usercommentrepo.DeleteUserComment(ment);
+	 }
+	 
+	 public int ReportUserComment(UserComment ment) {
+		 return usercommentrepo.ReportUserComment(ment);
+	 }
 }
