@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,18 @@ public class UserService {
 	public List<User> findByEmail(User user) {
 		return userRepo.findByEmail(user);
 		
+	}
+	
+	public int createUserFavorBook(int id_book, int id_user) {
+		return userRepo.createUserFavorBook(id_book, id_user);
+	}
+	
+	public int deleteUserFavorBook(int id_book, int id_user) {
+		return userRepo.deleteUserFavorBook(id_book, id_user);
+	}
+	
+	public List<Map<String, Object>> getFavorBook(int id_user){
+		return userRepo.getFavorBook(id_user);
 	}
 	
 }

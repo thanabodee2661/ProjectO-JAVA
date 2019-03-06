@@ -1,6 +1,8 @@
 package com.example.TestCreateProject.Model;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 public class User {
 
@@ -14,6 +16,8 @@ public class User {
 	private String email;
 	private String password;
 	private int status;
+	
+	private List<Map<String, Object>> favor;
 	
 	private Date ban_day;
 
@@ -103,6 +107,14 @@ public class User {
 
 	public void setBan_day(Date ban_day) {
 		this.ban_day = ban_day;
+	}
+
+	public List<Map<String, Object>> getFavor() {
+		return favor;
+	}
+
+	public void setFavor(List<Map<String, Object>> favor) {
+		this.favor = favor;
 	}
 
 }

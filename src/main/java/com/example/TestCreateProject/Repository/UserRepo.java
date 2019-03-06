@@ -51,7 +51,8 @@ public class UserRepo {
 	}
 
 	public int createUser(User user) {
-
+		System.out.println(user.getBirthday());
+		System.out.println(user.getAvatar());
 		String sql = "INSERT INTO user (name, lastname, birthday, avatar, email, password, panname) VALUES (?, ?, ?, ?, ?, ?, ?) ";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		int insert = jdbcTemplate.update(new PreparedStatementCreator() {
@@ -101,10 +102,33 @@ public class UserRepo {
 			userTemp.setPanname((String) row.get("panname"));
 			userTemp.setPassword((String) row.get("password"));
 			userTemp.setStatus((int) row.get("status"));
+
+			sql = "SELECT id_book FROM favor WHERE id_user = ?";
+			List<Map<String, Object>> favor = jdbcTemplate.queryForList(sql, new Object[] { (int) row.get("id_user") });
+
+			userTemp.setFavor(favor);
 			users.add(userTemp);
 		}
 
 		return users;
 
+	}
+
+	public int createUserFavorBook(int id_book, int id_user) {
+		String sql = "INSERT INTO favor (id_book, id_user) VALUES (?, ?) ";
+		return jdbcTemplate.update(sql, id_book, id_user);
+	}
+	
+	public int deleteUserFavorBook(int id_book, int id_user) {
+		String sql = "DELETE FROM favor WHERE id_book = ? AND id_user = ? ";
+		return jdbcTemplate.update(sql, id_book, id_user);
+	}
+	
+	public List<Map<String, Object>> getFavorBook(int id_user){
+		String sql = "SELECT b.id_book, b.name_fiction, b.create_day, b.preview, b.id_user, b.img_book FROM favor f\r\n" + 
+				"INNER JOIN book b ON b.id_book = f.id_book\r\n" + 
+				"WHERE f.id_user = ?";
+		List<Map<String, Object>> favor = jdbcTemplate.queryForList(sql, new Object[] { id_user });
+		return favor;
 	}
 }

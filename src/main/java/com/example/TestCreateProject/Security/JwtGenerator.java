@@ -29,6 +29,7 @@ public class JwtGenerator {
 		        claims.put("panname", jwtUser.getPanname());
 		        claims.put("status", jwtUser.getStatus());
 		        claims.put("application_date", jwtUser.getApplication_date().toString());
+//		        claims.put("favor", jwtUser.getFavor());
 //
 //		        return Jwts.builder()
 //		                .setClaims(claims)

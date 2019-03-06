@@ -2,12 +2,16 @@ package com.example.TestCreateProject.Controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +28,6 @@ import com.example.TestCreateProject.Service.UserService;
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
-
 	@Autowired
 	private JwtGenerator jwtGenerator;
 
@@ -40,18 +43,20 @@ public class UserController {
 	public int createUser(@RequestParam("name") String name, @RequestParam("lastname") String lastname,
 			@RequestParam("birthday") String birthday, @RequestParam("avatar") String avatar,
 			@RequestParam("email") String email, @RequestParam("panname") String panname,
-			@RequestParam("password") String password, @RequestParam(name = "file", required = false) MultipartFile file) throws ParseException {
-
+			@RequestParam("password") String password,
+			@RequestParam(name = "file", required = false) MultipartFile file) throws ParseException {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String[] b = birthday.split("-");
+		Date b_day = df.parse("" + (Integer.parseInt(b[0]) + 543) + "-" + b[1] + "-" + b[2]);
 		User user = new User();
 		user.setName(name);
 		user.setLastname(lastname);
-		user.setBirthday(new SimpleDateFormat("yyyy-mm-dd").parse(birthday));
-		user.setAvatar(avatar);
+		user.setBirthday(b_day);
 		user.setEmail(email);
 		user.setPanname(panname);
 		user.setPassword(password);
-		
-		if(file != null) {
+		if (file != null) {
+			user.setAvatar(avatar);
 			int id_user = userService.createUser(user);
 			if (id_user > 0) {
 				int uImg = userService.uploadImg(file, id_user);
@@ -63,11 +68,11 @@ public class UserController {
 			} else {
 				return 0;
 			}
-		}else {
+		} else {
 			int id_user = userService.createUser(user);
 			if (id_user > 0) {
 				return id_user;
-			}else {
+			} else {
 				return 0;
 			}
 		}
@@ -92,9 +97,27 @@ public class UserController {
 		} else {
 			HashMap<String, Object> map = new HashMap<>();
 			map.put("auth", null);
-			
+
 			return map;
 		}
 
+	}
+	
+	@PostMapping("/userfavorbook")
+	public int createUserFavorBook(@RequestParam("id_book") int id_book, @RequestParam("id_user") int id_user) {
+		System.out.println("105");
+		return userService.createUserFavorBook(id_book, id_user);
+	}
+	
+	@DeleteMapping("/userfavorbook/{id_user}/{id_book}")
+	public int deleteUserFavorBook(@PathVariable("id_book")int id_book, @PathVariable("id_user")int id_user) {
+		System.out.println("113");
+		return userService.deleteUserFavorBook(id_book, id_user);
+	}
+	
+	@GetMapping("/userfavorbook/{id_user}")
+	public List<Map<String, Object>> getFavorBook(@PathVariable("id_user") int id_user){
+		System.out.println("119");
+		return userService.getFavorBook(id_user);
 	}
 }
