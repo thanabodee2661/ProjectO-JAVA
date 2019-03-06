@@ -82,7 +82,7 @@ public class BookRepo {
 
 	public List<Book> getBookByOrder(int start, int end) {
 
-		String sql = "SELECT b.id_book, b.name_fiction, b.create_day, b.preview, b.id_user, b.img_book, u.panname, SUM(e.view) AS view FROM book b \r\n"
+		String sql = "SELECT b.id_book, b.name_fiction, b.create_day, b.preview, b.id_user, b.img_book, u.penname, SUM(e.view) AS view FROM book b \r\n"
 				+ "INNER JOIN user u ON u.id_user = b.id_user \r\n"
 				+ "INNER JOIN episode e ON e.id_book = b.id_book\r\n" + "GROUP BY b.id_book\r\n"
 				+ "ORDER BY create_day DESC LIMIT ?, ?";
@@ -99,7 +99,7 @@ public class BookRepo {
 			book.setPreview((String) row.get("preview"));
 			book.setImg_book((String) row.get("img_book"));
 			book.setView(((BigDecimal) row.get("view")).intValue());
-			book.setPanname((String) row.get("panname"));
+			book.setPanname((String) row.get("penname"));
 			sql = "SELECT tb.id_type, t.name_type FROM type_book tb " + "INNER JOIN type t ON t.id_type = tb.id_type "
 					+ "WHERE tb.id_book = ?";
 
@@ -116,7 +116,7 @@ public class BookRepo {
 
 	public List<Book> getBookByOrderView(int start, int end) {
 
-		String sql = "SELECT SUM(e.view) AS view, b.id_book, b.name_fiction, b.create_day, b.preview, b.img_book, b.id_user, u.panname FROM episode e\r\n"
+		String sql = "SELECT SUM(e.view) AS view, b.id_book, b.name_fiction, b.create_day, b.preview, b.img_book, b.id_user, u.penname FROM episode e\r\n"
 				+ "INNER JOIN book b ON b.id_book = e.id_book\r\n" + "INNER JOIN user u ON u.id_user = b.id_user\r\n"
 				+ "GROUP BY e.id_book\r\n" + "ORDER BY SUM(e.view) DESC LIMIT ?, ?";
 		List<Book> books = new ArrayList<Book>();
@@ -132,7 +132,7 @@ public class BookRepo {
 			book.setPreview((String) row.get("preview"));
 			book.setImg_book((String) row.get("img_book"));
 			book.setView(((BigDecimal) row.get("view")).intValue());
-			book.setPanname((String) row.get("panname"));
+			book.setPanname((String) row.get("penname"));
 			sql = "SELECT tb.id_type, t.name_type FROM type_book tb " + "INNER JOIN type t ON t.id_type = tb.id_type "
 					+ "WHERE tb.id_book = ?";
 
@@ -149,7 +149,7 @@ public class BookRepo {
 
 	public List<Book> getBookByOrderType(int type, int start, int end) {
 
-		String sql = "SELECT b.id_book, b.name_fiction, b.create_day, b.preview, b.id_user, b.img_book, u.panname, SUM(e.view) AS view FROM book b\r\n"
+		String sql = "SELECT b.id_book, b.name_fiction, b.create_day, b.preview, b.id_user, b.img_book, u.penname, SUM(e.view) AS view FROM book b\r\n"
 				+ "INNER JOIN (SELECT * FROM type_book tb WHERE tb.id_type = ?) tb ON b.id_book= tb.id_book\r\n"
 				+ "INNER JOIN user u ON u.id_user = b.id_user\r\n" + "INNER JOIN episode e ON e.id_book = b.id_book\r\n"
 				+ "GROUP BY b.id_book\r\n" + "ORDER BY b.create_day DESC LIMIT ?, ?";
@@ -165,7 +165,7 @@ public class BookRepo {
 			book.setId_user((int) row.get("id_user"));
 			book.setPreview((String) row.get("preview"));
 			book.setImg_book((String) row.get("img_book"));
-			book.setPanname((String) row.get("panname"));
+			book.setPanname((String) row.get("penname"));
 			book.setView(((BigDecimal) row.get("view")).intValue());
 
 			sql = "SELECT tb.id_type, t.name_type FROM type_book tb " + "INNER JOIN type t ON t.id_type = tb.id_type "
@@ -186,7 +186,7 @@ public class BookRepo {
 
 	public List<Book> getBookByOrderViewType(int type, int start, int end) {
 
-		String sql = "SELECT SUM(e.view) AS view, b.id_book, b.name_fiction, b.create_day, b.preview, b.id_user, b.img_book, u.panname FROM book b\r\n"
+		String sql = "SELECT SUM(e.view) AS view, b.id_book, b.name_fiction, b.create_day, b.preview, b.id_user, b.img_book, u.penname FROM book b\r\n"
 				+ "INNER JOIN episode e ON e.id_book = b.id_book\r\n"
 				+ "INNER JOIN (SELECT * FROM type_book tb WHERE tb.id_type = ?) tb ON tb.id_book = b.id_book\r\n"
 				+ "INNER JOIN user u ON u.id_user = b.id_user\r\n" + "GROUP BY b.id_book\r\n"
@@ -204,7 +204,7 @@ public class BookRepo {
 			book.setPreview((String) row.get("preview"));
 			book.setImg_book((String) row.get("img_book"));
 			book.setView(((BigDecimal) row.get("view")).intValue());
-			book.setPanname((String) row.get("panname"));
+			book.setPanname((String) row.get("penname"));
 			sql = "SELECT tb.id_type, t.name_type FROM type_book tb " + "INNER JOIN type t ON t.id_type = tb.id_type "
 					+ "WHERE tb.id_book = ?";
 
@@ -221,7 +221,7 @@ public class BookRepo {
 	
 	public List<Book> getBookByID(int id) {
 
-		String sql = "SELECT SUM(e.view) AS view, b.id_book, b.name_fiction, b.create_day, b.preview, b.id_user, b.img_book, u.panname, COUNT(e.id_episode) AS count_episode FROM book b\r\n" + 
+		String sql = "SELECT SUM(e.view) AS view, b.id_book, b.name_fiction, b.create_day, b.preview, b.id_user, b.img_book, u.penname, COUNT(e.id_episode) AS count_episode FROM book b\r\n" + 
 				"INNER JOIN episode e ON e.id_book = b.id_book\r\n" + 
 				"INNER JOIN user u ON u.id_user = b.id_user\r\n" + 
 				"WHERE b.id_book = ?";
@@ -238,7 +238,7 @@ public class BookRepo {
 			book.setPreview((String) row.get("preview"));
 			book.setImg_book((String) row.get("img_book"));
 			book.setView(((BigDecimal) row.get("view")).intValue());
-			book.setPanname((String) row.get("panname"));
+			book.setPanname((String) row.get("penname"));
 			book.setCount_episode(((Long) row.get("count_episode")).intValue());
 			sql = "SELECT tb.id_type, t.name_type FROM type_book tb " + "INNER JOIN type t ON t.id_type = tb.id_type "
 					+ "WHERE tb.id_book = ?";
