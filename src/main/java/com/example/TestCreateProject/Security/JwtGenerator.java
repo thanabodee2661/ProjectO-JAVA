@@ -2,6 +2,7 @@ package com.example.TestCreateProject.Security;
 
 import org.springframework.stereotype.Component;
 
+import com.example.TestCreateProject.Model.Admin;
 import com.example.TestCreateProject.Model.User;
 
 import io.jsonwebtoken.Claims;
@@ -28,6 +29,37 @@ public class JwtGenerator {
 		        claims.put("panname", jwtUser.getPanname());
 		        claims.put("status", jwtUser.getStatus());
 		        claims.put("application_date", jwtUser.getApplication_date().toString());
+//
+//		        return Jwts.builder()
+//		                .setClaims(claims)
+//		                .signWith(SignatureAlgorithm.HS512, "youtube")
+//		                .compact();
+			jws = Jwts.builder() // (1)
+
+					.setClaims(claims)
+				    .signWith(SignatureAlgorithm.HS512, "youtube")          // (3)
+				     
+				    .compact(); 
+			
+		}catch(Exception e) {
+			System.out.println(e);
+			jws = "error";
+		}
+		
+		return jws;
+    }
+	
+        public String admingenerate(Admin jwtAdmin) {
+		
+		System.out.println(jwtAdmin);
+		String jws = null;
+
+		try {
+			 Claims claims = Jwts.claims()
+		                .setSubject(jwtAdmin.getUsername());
+		       claims.put("id_admin",jwtAdmin.getId_admin());
+		       claims.put("username",jwtAdmin.getUsername());
+		       claims.put("password",jwtAdmin.getPassword());
 //
 //		        return Jwts.builder()
 //		                .setClaims(claims)
