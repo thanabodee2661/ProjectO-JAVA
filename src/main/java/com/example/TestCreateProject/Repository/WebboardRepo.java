@@ -379,4 +379,9 @@ public class WebboardRepo {
 			int update = jdbcTemplate.update("UPDATE user_webboard set status=2 WHERE id_user_webboard=?",web.getIdUserWebboard());
 			return 1;
 		}
+		
+		public int changeEmail(webboard web) {
+			int update = jdbcTemplate.update("UPDATE user set user.password=? WHERE id_user=?",web.getPassword(),web.getIdUser());
+			return 1;
+		}
 }

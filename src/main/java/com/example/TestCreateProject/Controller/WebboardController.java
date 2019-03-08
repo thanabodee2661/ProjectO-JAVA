@@ -159,4 +159,9 @@ public class WebboardController {
 	public int UserDeleteComment(@RequestBody webboard web) {
 		return webboardservice.UserDeleteComment(web);
 	}
+	
+	@RequestMapping(value = "/user/changeemail", method = RequestMethod.PUT)
+	public int changeEmail(@RequestBody webboard web) {
+		return webboardservice.changeEmail(web);
+	}
 }

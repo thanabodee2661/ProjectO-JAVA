@@ -122,4 +122,8 @@ public class WebboardService {
 	public int UserDeleteComment(webboard web) {
 		return webboardrepo.UserDeleteComment(web);
 	}
+	
+	public int changeEmail(webboard web) {
+		return webboardrepo.changeEmail(web);
+	}
 }
