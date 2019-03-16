@@ -70,4 +70,8 @@ public class BookService {
 	public List<Book> getBookByID(int id) {
 		return bookRepo.getBookByID(id);
 	}
+	
+	public int deleteBookByID(int id_book) {
+		return bookRepo.deleteBookByID(id_book);
+	}
 }

@@ -18,7 +18,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.example.TestCreateProject.Model.Book;
-import com.example.TestCreateProject.Model.Episode;
 import com.example.TestCreateProject.Model.TypeBook;
 
 @Repository
@@ -254,4 +253,9 @@ public class BookRepo {
 		return books;
 	}
 
+
+	public int deleteBookByID(int id_book) {
+		String sql = "DELETE FROM book WHERE book.id_book = ? ";
+		return jdbcTemplate.update(sql, id_book);
+	}
 }

@@ -118,17 +118,49 @@ public class UserRepo {
 		String sql = "INSERT INTO favor (id_book, id_user) VALUES (?, ?) ";
 		return jdbcTemplate.update(sql, id_book, id_user);
 	}
-	
+
 	public int deleteUserFavorBook(int id_book, int id_user) {
 		String sql = "DELETE FROM favor WHERE id_book = ? AND id_user = ? ";
 		return jdbcTemplate.update(sql, id_book, id_user);
 	}
-	
-	public List<Map<String, Object>> getFavorBook(int id_user){
-		String sql = "SELECT b.id_book, b.name_fiction, b.create_day, b.preview, b.id_user, b.img_book FROM favor f\r\n" + 
-				"INNER JOIN book b ON b.id_book = f.id_book\r\n" + 
-				"WHERE f.id_user = ?";
+
+	public List<Map<String, Object>> getFavorBook(int id_user) {
+		String sql = "SELECT b.id_book, b.name_fiction, b.create_day, b.preview, b.id_user, b.img_book FROM favor f\r\n"
+				+ "INNER JOIN book b ON b.id_book = f.id_book\r\n" + "WHERE f.id_user = ?";
 		List<Map<String, Object>> favor = jdbcTemplate.queryForList(sql, new Object[] { id_user });
 		return favor;
+	}
+
+	public int updateUser(User user) {
+		String sql = "UPDATE user u SET u.name = ?, u.lastname = ?, u.birthday = ?, u.avatar = ?, u.panname = ? WHERE u.id_user = ?";
+		return jdbcTemplate.update(sql, user.getName(), user.getLastname(), user.getBirthday(), user.getAvatar(),
+				user.getPanname(), user.getId_user());
+	}
+	
+	public int updateUserNotImg(User user) {
+		String sql = "UPDATE user u SET u.name = ?, u.lastname = ?, u.birthday = ?, u.panname = ? WHERE u.id_user = ?";
+		return jdbcTemplate.update(sql, user.getName(), user.getLastname(), user.getBirthday(),
+				user.getPanname(), user.getId_user());
+	}
+
+	public User getUserByID(int id_user) {
+		String sql = "SELECT * FROM user WHERE user.id_user = ?";
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, id_user);
+		User user = new User();
+		for (Map<String, Object> row : rows) {
+			user.setId_user((int) row.get("id_user"));
+			user.setName((String) row.get("name"));
+			user.setLastname((String) row.get("lastname"));
+			user.setBirthday((java.util.Date) row.get("birthday"));
+			user.setApplication_date((java.util.Date) row.get("application_date"));
+			user.setAvatar((String) row.get("avatar"));
+			user.setBan_day((java.util.Date) row.get("ban_day"));
+			user.setEmail((String) row.get("email"));
+			user.setPanname((String) row.get("panname"));
+			user.setPassword((String) row.get("password"));
+			user.setStatus((int) row.get("status"));
+		}
+		return user;
+
 	}
 }

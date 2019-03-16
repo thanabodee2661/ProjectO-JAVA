@@ -16,10 +16,13 @@ public class EpisodeRepo {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public List<Episode> getEpisodeByID(int id_book) {
-		String sql = "SELECT * FROM episode WHERE id_book = ? ";
+	public List<Episode> getEpisodeByID(int id_user, int id_book) {
+		String sql = "SELECT e.id_episode, e.name_episode, e.view, e.content, e.id_book FROM episode e\r\n" + 
+				"INNER JOIN book ON book.id_book = e.id_book\r\n" + 
+				"INNER JOIN user ON user.id_user = book.id_user\r\n" + 
+				"WHERE user.id_user = ? AND book.id_book = ?";
 		List<Episode> episodes = new ArrayList<Episode>();
-		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, new Object[] { id_book });
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, new Object[] { id_user, id_book });
 
 		for (Map<String, Object> row : rows) {
 			Episode episode = new Episode();

@@ -14,8 +14,8 @@ public class EpisodeService {
 	@Autowired
 	private EpisodeRepo episodeRepo;
 
-	public List<Episode> getEpisodeByID(int id_book) {
-		return episodeRepo.getEpisodeByID(id_book);
+	public List<Episode> getEpisodeByID(int id_user, int id_book) {
+		return episodeRepo.getEpisodeByID(id_user, id_book);
 	}
 
 	public Episode getEpisodeByIDEpisode(int id_episode) {

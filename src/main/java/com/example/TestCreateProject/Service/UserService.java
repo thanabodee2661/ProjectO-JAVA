@@ -72,4 +72,24 @@ public class UserService {
 		return userRepo.getFavorBook(id_user);
 	}
 	
+	public User updateUser(User user) {
+		int status = userRepo.updateUser(user);
+		if(status > 0) {
+			User userTemp = userRepo.getUserByID(user.getId_user());
+			return userTemp;
+		}else {
+			return null;
+		}
+	}
+	
+	public User updateUserNotImg(User user) {
+		int status = userRepo.updateUserNotImg(user);
+		if(status > 0) {
+			User userTemp = userRepo.getUserByID(user.getId_user());
+			return userTemp;
+		}else {
+			return null;
+		}
+	}
+	
 }

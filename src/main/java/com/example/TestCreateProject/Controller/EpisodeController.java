@@ -21,9 +21,9 @@ public class EpisodeController {
 	@Autowired
 	private EpisodeService episodeService;
 	
-	@GetMapping("/episodes/{id}")
-	public List<Episode> getEpisodeByID(@PathVariable("id") int id_book) {
-		return episodeService.getEpisodeByID(id_book);
+	@GetMapping("/episodes/{id}/{id_user}")
+	public List<Episode> getEpisodeByID(@PathVariable("id") int id_book, @PathVariable("id_user")int id_user) {
+		return episodeService.getEpisodeByID(id_user, id_book);
 	}
 	
 	@GetMapping("/episode/{id}")

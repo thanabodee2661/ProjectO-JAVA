@@ -1,7 +1,6 @@
 package com.example.TestCreateProject.Repository;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.TestCreateProject.Model.Book;
 import com.example.TestCreateProject.Model.TypeBook;
 
 @Repository

@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -116,5 +117,11 @@ public class BookController {
 	@GetMapping("/book/id/{id}")
 	public List<Book> getBookByID(@PathVariable("id") int id) {
 		return bookService.getBookByID(id);
+	}
+	
+	@DeleteMapping("/book/{id}")
+	public int deleteBookByID(@PathVariable("id")int id_book) {
+		System.out.println("124");
+		return bookService.deleteBookByID(id_book);
 	}
 }
