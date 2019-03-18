@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2019 at 12:31 PM
+-- Generation Time: Mar 18, 2019 at 02:02 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -85,14 +85,6 @@ CREATE TABLE `book` (
   `img_book` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `book`
---
-
-INSERT INTO `book` (`id_book`, `name_fiction`, `create_day`, `preview`, `id_user`, `status`, `img_book`) VALUES
-(1, 'เจ้าพ่อ', '2019-02-16 19:31:33', 'เจ้าพ่อออกมา', 1, 0, ''),
-(2, 'test', '2019-02-16 21:41:22', 'asdasdasdas', 2, 0, '');
-
 -- --------------------------------------------------------
 
 --
@@ -131,15 +123,6 @@ CREATE TABLE `episode` (
   `day_create_episode` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `episode`
---
-
-INSERT INTO `episode` (`id_episode`, `name_episode`, `view`, `Content`, `id_book`, `day_create_episode`) VALUES
-(1, 'บุกเจ้าพ่อ', 107, 'ซูลูกุย', 1, '2019-02-17 12:49:30'),
-(2, 'ตอนที่1 hgjjvhfgh', 20, 'ghjjhjkujj', 2, '2019-02-17 12:49:30'),
-(3, 'test 2', 50, 'asdsadadawdasdw', 1, '2019-02-25 18:37:55');
-
 -- --------------------------------------------------------
 
 --
@@ -151,13 +134,6 @@ CREATE TABLE `favor` (
   `id_book` int(100) NOT NULL,
   `id_user` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `favor`
---
-
-INSERT INTO `favor` (`id_typebook`, `id_book`, `id_user`) VALUES
-(1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -171,20 +147,6 @@ CREATE TABLE `likely` (
   `id_book` int(100) NOT NULL,
   `day_like` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `likely`
---
-
-INSERT INTO `likely` (`id_likely`, `id_user`, `id_book`, `day_like`) VALUES
-(1, 1, 1, '2019-02-07 00:00:00'),
-(2, 1, 2, '2019-02-07 00:00:00'),
-(3, 2, 1, '2019-02-17 09:34:35'),
-(4, 2, 2, '2018-01-02 12:02:02'),
-(5, 3, 1, '2018-12-07 00:00:00'),
-(6, 3, 2, '2019-01-02 00:00:00'),
-(7, 4, 1, '2018-12-25 00:00:00'),
-(8, 4, 2, '2018-11-07 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -215,14 +177,6 @@ CREATE TABLE `type_book` (
   `id_book` int(100) NOT NULL,
   `id_type` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `type_book`
---
-
-INSERT INTO `type_book` (`id_type_book`, `id_book`, `id_type`) VALUES
-(1, 1, 1),
-(2, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -288,17 +242,6 @@ CREATE TABLE `user_comment` (
   `status` int(11) NOT NULL DEFAULT '0',
   `id_episode` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `user_comment`
---
-
-INSERT INTO `user_comment` (`id_user_comment`, `id_user`, `id_comment`, `id_book`, `status`, `id_episode`) VALUES
-(1, 1, 1, 1, 0, 1),
-(2, 2, 2, 1, 0, 1),
-(3, 3, 3, 2, 0, 2),
-(4, 1, 4, 1, 1, 3),
-(5, 1, 5, 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -378,7 +321,7 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `adminwebboard`
   ADD PRIMARY KEY (`id_admin_webboard`),
-  ADD KEY `id_admin` (`id_admin`);
+  ADD KEY `adminwebboard_ibfk_1` (`id_admin`);
 
 --
 -- Indexes for table `book`
@@ -413,7 +356,7 @@ ALTER TABLE `favor`
 --
 ALTER TABLE `likely`
   ADD PRIMARY KEY (`id_likely`),
-  ADD KEY `id_book` (`id_book`),
+  ADD KEY `likely_ibfk_1` (`id_book`),
   ADD KEY `id_user` (`id_user`);
 
 --
@@ -447,25 +390,25 @@ ALTER TABLE `user`
 --
 ALTER TABLE `user_comment`
   ADD PRIMARY KEY (`id_user_comment`),
-  ADD KEY `id_user` (`id_user`),
+  ADD KEY `user_comment_ibfk_5` (`id_comment`),
   ADD KEY `id_book` (`id_book`),
-  ADD KEY `id_episode` (`id_episode`),
-  ADD KEY `id_comment` (`id_comment`);
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_episode` (`id_episode`);
 
 --
 -- Indexes for table `user_webboard`
 --
 ALTER TABLE `user_webboard`
   ADD PRIMARY KEY (`id_user_webboard`),
-  ADD KEY `id_user` (`id_user`),
-  ADD KEY `id_webboard` (`id_webboard`);
+  ADD KEY `user_webboard_ibfk_2` (`id_webboard`),
+  ADD KEY `user_webboard_ibfk_3` (`id_user`);
 
 --
 -- Indexes for table `webboard`
 --
 ALTER TABLE `webboard`
   ADD PRIMARY KEY (`id_webboard`),
-  ADD KEY `id_typewebboard` (`id_typewebboard`),
+  ADD KEY `webboard_ibfk_1` (`id_typewebboard`),
   ADD KEY `id_user` (`id_user`);
 
 --
@@ -479,10 +422,28 @@ ALTER TABLE `adminwebboard`
   MODIFY `id_admin_webboard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `book`
+--
+ALTER TABLE `book`
+  MODIFY `id_book` int(100) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
   MODIFY `id_comment` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `episode`
+--
+ALTER TABLE `episode`
+  MODIFY `id_episode` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `favor`
+--
+ALTER TABLE `favor`
+  MODIFY `id_typebook` int(100) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `likely`
@@ -491,10 +452,28 @@ ALTER TABLE `likely`
   MODIFY `id_likely` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `type`
+--
+ALTER TABLE `type`
+  MODIFY `id_type` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `type_book`
+--
+ALTER TABLE `type_book`
+  MODIFY `id_type_book` int(100) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `type_webboard`
 --
 ALTER TABLE `type_webboard`
   MODIFY `id_typewebboard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id_user` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user_comment`
@@ -522,63 +501,63 @@ ALTER TABLE `webboard`
 -- Constraints for table `adminwebboard`
 --
 ALTER TABLE `adminwebboard`
-  ADD CONSTRAINT `adminwebboard_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`Id_admin`);
+  ADD CONSTRAINT `adminwebboard_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`Id_admin`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `book`
 --
 ALTER TABLE `book`
-  ADD CONSTRAINT `book_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
+  ADD CONSTRAINT `book_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `episode`
 --
 ALTER TABLE `episode`
-  ADD CONSTRAINT `episode_ibfk_1` FOREIGN KEY (`id_book`) REFERENCES `book` (`id_book`);
+  ADD CONSTRAINT `episode_ibfk_1` FOREIGN KEY (`id_book`) REFERENCES `book` (`id_book`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `favor`
 --
 ALTER TABLE `favor`
-  ADD CONSTRAINT `favor_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
-  ADD CONSTRAINT `favor_ibfk_2` FOREIGN KEY (`id_book`) REFERENCES `book` (`id_book`);
+  ADD CONSTRAINT `favor_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `favor_ibfk_2` FOREIGN KEY (`id_book`) REFERENCES `book` (`id_book`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `likely`
 --
 ALTER TABLE `likely`
-  ADD CONSTRAINT `likely_ibfk_1` FOREIGN KEY (`id_book`) REFERENCES `type_book` (`id_book`),
-  ADD CONSTRAINT `likely_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
+  ADD CONSTRAINT `likely_ibfk_1` FOREIGN KEY (`id_book`) REFERENCES `type_book` (`id_book`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `likely_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `type_book`
 --
 ALTER TABLE `type_book`
-  ADD CONSTRAINT `type_book_ibfk_1` FOREIGN KEY (`id_book`) REFERENCES `book` (`id_book`),
-  ADD CONSTRAINT `type_book_ibfk_2` FOREIGN KEY (`id_type`) REFERENCES `type` (`id_type`);
+  ADD CONSTRAINT `type_book_ibfk_1` FOREIGN KEY (`id_book`) REFERENCES `book` (`id_book`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `type_book_ibfk_2` FOREIGN KEY (`id_type`) REFERENCES `type` (`id_type`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `user_comment`
 --
 ALTER TABLE `user_comment`
-  ADD CONSTRAINT `user_comment_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
-  ADD CONSTRAINT `user_comment_ibfk_3` FOREIGN KEY (`id_book`) REFERENCES `book` (`id_book`),
-  ADD CONSTRAINT `user_comment_ibfk_4` FOREIGN KEY (`id_episode`) REFERENCES `episode` (`id_episode`),
-  ADD CONSTRAINT `user_comment_ibfk_5` FOREIGN KEY (`id_comment`) REFERENCES `comment` (`id_comment`);
+  ADD CONSTRAINT `user_comment_ibfk_5` FOREIGN KEY (`id_comment`) REFERENCES `comment` (`id_comment`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_comment_ibfk_6` FOREIGN KEY (`id_book`) REFERENCES `book` (`id_book`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_comment_ibfk_7` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_comment_ibfk_8` FOREIGN KEY (`id_episode`) REFERENCES `episode` (`id_episode`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `user_webboard`
 --
 ALTER TABLE `user_webboard`
-  ADD CONSTRAINT `user_webboard_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
-  ADD CONSTRAINT `user_webboard_ibfk_2` FOREIGN KEY (`id_webboard`) REFERENCES `webboard` (`id_webboard`);
+  ADD CONSTRAINT `user_webboard_ibfk_2` FOREIGN KEY (`id_webboard`) REFERENCES `webboard` (`id_webboard`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_webboard_ibfk_3` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `webboard`
 --
 ALTER TABLE `webboard`
-  ADD CONSTRAINT `webboard_ibfk_1` FOREIGN KEY (`id_typewebboard`) REFERENCES `type_webboard` (`id_typewebboard`),
-  ADD CONSTRAINT `webboard_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
+  ADD CONSTRAINT `webboard_ibfk_1` FOREIGN KEY (`id_typewebboard`) REFERENCES `type_webboard` (`id_typewebboard`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `webboard_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
