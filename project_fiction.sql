@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2019 at 12:19 PM
+-- Generation Time: Mar 18, 2019 at 12:31 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -40,6 +40,34 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`id_admin`, `username`, `password`) VALUES
 (1, 'admin', '1234');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `adminwebboard`
+--
+
+CREATE TABLE `adminwebboard` (
+  `id_admin_webboard` int(11) NOT NULL,
+  `headder_webboard` varchar(100) NOT NULL,
+  `day_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `id_admin` int(11) NOT NULL,
+  `collect_webboard` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `adminwebboard`
+--
+
+INSERT INTO `adminwebboard` (`id_admin_webboard`, `headder_webboard`, `day_create`, `id_admin`, `collect_webboard`) VALUES
+(1, 'กติกา การใช้เว็บนี้', '2019-03-02 13:22:46', 1, '1.พูดคุยกันด้วยภาษาสุภาพ'),
+(2, 'test1', '2019-03-02 17:08:15', 1, 'ssdfsfsf'),
+(3, 'test2 ', '2019-03-02 17:08:41', 1, 'test2'),
+(4, 'เทส3', '2019-03-02 17:09:00', 1, 'test333'),
+(5, 'หกฟก', '2019-03-02 17:13:04', 1, 'ddddd'),
+(6, 'เทสภาษาไทย', '2019-03-02 17:28:45', 1, 'หหหหหหหหหหห'),
+(7, 'testlong', '2019-03-02 20:53:55', 1, 'cs'),
+(8, 'test6', '2019-03-04 00:15:54', 1, 'ggggllll');
 
 -- --------------------------------------------------------
 
@@ -179,6 +207,46 @@ INSERT INTO `type` (`id_type`, `name_type`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `type_book`
+--
+
+CREATE TABLE `type_book` (
+  `id_type_book` int(100) NOT NULL,
+  `id_book` int(100) NOT NULL,
+  `id_type` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `type_book`
+--
+
+INSERT INTO `type_book` (`id_type_book`, `id_book`, `id_type`) VALUES
+(1, 1, 1),
+(2, 2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `type_webboard`
+--
+
+CREATE TABLE `type_webboard` (
+  `id_typewebboard` int(11) NOT NULL,
+  `name_webboard` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `type_webboard`
+--
+
+INSERT INTO `type_webboard` (`id_typewebboard`, `name_webboard`) VALUES
+(1, 'ห้องแชร์เทคนิค'),
+(2, 'ห้องนิยายการ์ตูน'),
+(3, 'เรื่องรัก');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -232,6 +300,69 @@ INSERT INTO `user_comment` (`id_user_comment`, `id_user`, `id_comment`, `id_book
 (4, 1, 4, 1, 1, 3),
 (5, 1, 5, 1, 0, 1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_webboard`
+--
+
+CREATE TABLE `user_webboard` (
+  `id_user_webboard` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_webboard` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `collect_user_webboard` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user_webboard`
+--
+
+INSERT INTO `user_webboard` (`id_user_webboard`, `id_user`, `id_webboard`, `status`, `collect_user_webboard`) VALUES
+(1, 1, 1, 0, 'hhh'),
+(2, 1, 4, 0, 'aaaa'),
+(7, 2, 2, 0, 'kkkk'),
+(8, 3, 3, 0, 'gggg'),
+(9, 4, 1, 0, 'ก็ตั้งใจเขียนดิ'),
+(10, 1, 9, 0, 'lll'),
+(11, 1, 9, 1, 'lll'),
+(12, 1, 6, 0, 'บ่นไรพ่อหนุ่ม'),
+(13, 1, 9, 0, 'เทสtest'),
+(14, 2, 9, 0, 'jkเทสอีกครั้ง23'),
+(15, 2, 9, 0, 'testการส่ง2'),
+(16, 2, 9, 0, 'jjj'),
+(17, 2, 9, 2, 'cd');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `webboard`
+--
+
+CREATE TABLE `webboard` (
+  `id_webboard` int(11) NOT NULL,
+  `collect_webboard` text NOT NULL,
+  `headder_webboard` varchar(100) NOT NULL,
+  `id_typewebboard` int(11) NOT NULL,
+  `day_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `id_user` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `webboard`
+--
+
+INSERT INTO `webboard` (`id_webboard`, `collect_webboard`, `headder_webboard`, `id_typewebboard`, `day_create`, `id_user`, `status`) VALUES
+(1, 'เขียนยังไงให้ดี', 'อยากจะรู้', 1, '2019-02-27 23:20:46', 1, 0),
+(2, 'อยากเขียนเก่งๆ', 'สอนหน่อย', 1, '2019-02-27 23:21:16', 2, 0),
+(3, 'มีคนแปลนิยาย เรื่องนี้แล้วหรือยัง', 'อยากทราบว่า', 2, '2019-02-27 23:21:49', 3, 0),
+(4, 'ชอบนิยาย', 'ปลื้มสุดๆ', 3, '2019-02-27 23:22:31', 4, 0),
+(6, 'หกกกกก', 'กหดหกดหดหดห', 3, '2019-03-02 17:58:21', 1, 0),
+(8, 'หหหห', 'ลองเทส5', 1, '2019-03-02 18:03:37', 2, 0),
+(9, 'แก้ไข111', 'เทสการใช้งาน2', 1, '2019-03-02 18:03:53', 2, 0),
+(10, 'vbvb', 'ลองalert', 3, '2019-03-02 20:52:57', 2, 1);
+
 --
 -- Indexes for dumped tables
 --
@@ -241,6 +372,13 @@ INSERT INTO `user_comment` (`id_user_comment`, `id_user`, `id_comment`, `id_book
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id_admin`);
+
+--
+-- Indexes for table `adminwebboard`
+--
+ALTER TABLE `adminwebboard`
+  ADD PRIMARY KEY (`id_admin_webboard`),
+  ADD KEY `id_admin` (`id_admin`);
 
 --
 -- Indexes for table `book`
@@ -285,6 +423,20 @@ ALTER TABLE `type`
   ADD PRIMARY KEY (`id_type`);
 
 --
+-- Indexes for table `type_book`
+--
+ALTER TABLE `type_book`
+  ADD PRIMARY KEY (`id_type_book`),
+  ADD KEY `id_book` (`id_book`),
+  ADD KEY `id_type` (`id_type`);
+
+--
+-- Indexes for table `type_webboard`
+--
+ALTER TABLE `type_webboard`
+  ADD PRIMARY KEY (`id_typewebboard`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -301,8 +453,30 @@ ALTER TABLE `user_comment`
   ADD KEY `id_comment` (`id_comment`);
 
 --
+-- Indexes for table `user_webboard`
+--
+ALTER TABLE `user_webboard`
+  ADD PRIMARY KEY (`id_user_webboard`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_webboard` (`id_webboard`);
+
+--
+-- Indexes for table `webboard`
+--
+ALTER TABLE `webboard`
+  ADD PRIMARY KEY (`id_webboard`),
+  ADD KEY `id_typewebboard` (`id_typewebboard`),
+  ADD KEY `id_user` (`id_user`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `adminwebboard`
+--
+ALTER TABLE `adminwebboard`
+  MODIFY `id_admin_webboard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `comment`
@@ -317,14 +491,38 @@ ALTER TABLE `likely`
   MODIFY `id_likely` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `type_webboard`
+--
+ALTER TABLE `type_webboard`
+  MODIFY `id_typewebboard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `user_comment`
 --
 ALTER TABLE `user_comment`
   MODIFY `id_user_comment` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `user_webboard`
+--
+ALTER TABLE `user_webboard`
+  MODIFY `id_user_webboard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `webboard`
+--
+ALTER TABLE `webboard`
+  MODIFY `id_webboard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `adminwebboard`
+--
+ALTER TABLE `adminwebboard`
+  ADD CONSTRAINT `adminwebboard_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`Id_admin`);
 
 --
 -- Constraints for table `book`
@@ -353,6 +551,13 @@ ALTER TABLE `likely`
   ADD CONSTRAINT `likely_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
 
 --
+-- Constraints for table `type_book`
+--
+ALTER TABLE `type_book`
+  ADD CONSTRAINT `type_book_ibfk_1` FOREIGN KEY (`id_book`) REFERENCES `book` (`id_book`),
+  ADD CONSTRAINT `type_book_ibfk_2` FOREIGN KEY (`id_type`) REFERENCES `type` (`id_type`);
+
+--
 -- Constraints for table `user_comment`
 --
 ALTER TABLE `user_comment`
@@ -360,6 +565,20 @@ ALTER TABLE `user_comment`
   ADD CONSTRAINT `user_comment_ibfk_3` FOREIGN KEY (`id_book`) REFERENCES `book` (`id_book`),
   ADD CONSTRAINT `user_comment_ibfk_4` FOREIGN KEY (`id_episode`) REFERENCES `episode` (`id_episode`),
   ADD CONSTRAINT `user_comment_ibfk_5` FOREIGN KEY (`id_comment`) REFERENCES `comment` (`id_comment`);
+
+--
+-- Constraints for table `user_webboard`
+--
+ALTER TABLE `user_webboard`
+  ADD CONSTRAINT `user_webboard_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
+  ADD CONSTRAINT `user_webboard_ibfk_2` FOREIGN KEY (`id_webboard`) REFERENCES `webboard` (`id_webboard`);
+
+--
+-- Constraints for table `webboard`
+--
+ALTER TABLE `webboard`
+  ADD CONSTRAINT `webboard_ibfk_1` FOREIGN KEY (`id_typewebboard`) REFERENCES `type_webboard` (`id_typewebboard`),
+  ADD CONSTRAINT `webboard_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
